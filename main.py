@@ -13,4 +13,4 @@ if __name__ == '__main__':
     app.pack(expand=True, fill=tk.BOTH)
     root.mainloop()
     
-    input("Glad to have served you! Press 'Enter' to quit.")
+    input("\nGlad to have served you! Press 'Enter' to quit.")
