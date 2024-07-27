@@ -1,1 +1,1 @@
-dans pageTemplate j'ai prevu laisse la classe squelette pour chaque page et dans Landing.py on va mettre le home on aura aussi meet pour celui du meet et je crois un dernier pour les info de connexion
+

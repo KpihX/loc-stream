@@ -1,20 +1,16 @@
-import io
-from PIL import Image
-import mss
+#!/usr/bin/env python3
+# -*-coding:UTF-8 -*
 
-def print_hi(name):
-    print(f'Hi, {name}')
-    with mss.mss() as sct:
-        # Capture the screen
-        screenshot = sct.grab(sct.monitors[1])
-        img = Image.frombytes('RGB', screenshot.size, screenshot.rgb)
-
-        byte_arr = io.BytesIO()
-        img.save(byte_arr, format='JPEG')
-        img_bytes = byte_arr.getvalue()
-        size = len(img_bytes)
-
-        print(size)
+import tkinter as tk
+from ui import App
 
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    root =  tk.Tk()
+    root.title("K&K Meet")
+    root.geometry("800x600")
+    
+    app = App(root)
+    app.pack(expand=True, fill=tk.BOTH)
+    root.mainloop()
+    
+    input("Glad to have served you! Press 'Enter' to quit.")
