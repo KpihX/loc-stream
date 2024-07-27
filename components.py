@@ -38,9 +38,7 @@ class Header(tk.Frame):
         
         self.dropdown_menu = tk.Menu(master, tearoff=0)
         self.dropdown_menu.add_command(label="Change login", command=self.handle_change_login)
-                
-        self.login_settings = LoginSettings(self.master, self.master.handle_login_change)           
-                
+                                
     def show_dropdown(self, event)-> None:
         self.dropdown_menu.post(event.x_root, event.y_root)
 
@@ -55,23 +53,23 @@ class LoginSettings(tk.Toplevel):
         self.title("Login settings")
         self.login_callback = login_callback
         
-        self.login_frame = tk.Frame(self)
-        self.login_frame.pack(pady=7)
+        self.login_label = tk.Label(self, text="Login")
+        self.login_label.grid(row=0, column=0, padx=20, pady=10)
         
-        self.login_label = tk.Label(self.login_frame, text="Login")
-        self.login_label.pack(side=tk.LEFT, padx=7)
-        
-        self.login_entry = tk.Entry(self.login_frame, textvariable=self.master.login)
-        self.login_entry.pack(side=tk.RIGHT, padx=7)
+        self.login_var = tk.StringVar()
+        print(f"Old login: {self.master.login.get()}")
+        self.login_var.set(self.master.login.get())
+        self.login_entry = tk.Entry(self, textvariable=self.login_var)
+        self.login_entry.grid(row=0, column=1, padx=20, pady=10)
         
         self.validate_btn = tk.Button(self, text="Save", command=self.submit)
-        self.validate_btn.pack(pady=10)
+        self.validate_btn.grid(row=1, column=0, pady=10, columnspan=2)
         
         self.transient(self.master) # Ensure that the popup is in front of the main frame (master)
         self.grab_set() # To have a modal popup
         
-        self.geometry("300x100") 
-        self.update_idletasks()
+        # self.geometry("300x100") 
+        # self.update_idletasks()
         
         # self.protocol("WM_DELETE_WINDOW", self.on_close)
         

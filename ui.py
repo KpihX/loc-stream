@@ -29,7 +29,7 @@ class App(tk.Frame):
         if len(users) == 0:
             self.register_popup = Register(self, self.handle_register)
         else:
-            self.login.set(users[0])
+            self.login.set(users[0][0])
         if self.close:
             self.quit()
             exit(1)
@@ -58,7 +58,7 @@ class App(tk.Frame):
         du.add_user(login)
         
     def handle_login_change(self, login):
-        du.update_user(self.login, login)
+        du.update_user(self.login.get(), login)
         self.login.set(login)
         messagebox.showinfo("Success", f"You new login is '{login}'")
         
