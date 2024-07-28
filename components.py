@@ -68,11 +68,6 @@ class LoginSettings(tk.Toplevel):
         self.transient(self.master) # Ensure that the popup is in front of the main frame (master)
         self.grab_set() # To have a modal popup
         
-        # self.geometry("300x100") 
-        # self.update_idletasks()
-        
-        # self.protocol("WM_DELETE_WINDOW", self.on_close)
-        
         self.wait_window(self) # Wait for self to be closed
         
     def submit(self)-> None:
@@ -82,11 +77,7 @@ class LoginSettings(tk.Toplevel):
             return
         print(f"New login: {login}")
         self.login_callback(login)
-        self.destroy()
-        
-    # def on_close(self)-> None:
-    #     print("Closing of the login settings popup")
-        
+        self.destroy() 
 
 class Footer(tk.Frame):
     def __init__(self, master)-> None:

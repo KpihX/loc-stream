@@ -9,6 +9,7 @@ from tkinter import Frame, messagebox, Tk
 
 from components import Header, Footer, Register
 from pages import HomePage
+from utils import get_ip_address
 
 from typing import Dict, TYPE_CHECKING
 
@@ -21,6 +22,7 @@ class App(tk.Frame):
         self.master = master
         self.meeting: Meeting
         self.login = tk.StringVar()
+        self.ip = get_ip_address()
         self.close = False
         
         du.create_users()

@@ -3,11 +3,10 @@
 
 import tkinter as tk
 
-from tkinter import simpledialog, Frame
+from tkinter import simpledialog, Frame, messagebox
 from PIL import Image, ImageTk
 
 from meeting import Meeting
-from utils import get_ip_address
 
 from typing import TYPE_CHECKING
 
@@ -32,35 +31,44 @@ class HomePage(tk.Frame):
         self.app.pages["Meet"].pack(fill=tk.BOTH, expand=True)
         self.app.show_page("Meet")
         
-        self.app.meeting = Meeting()
+        self.app.meeting = Meeting(self.app.pages["Meet"])
         self.app.meeting.start_meet()
         
     def join_meet(self)-> None:
-        meeting_code = simpledialog.askstring("Meeting Code", "Enter the meeting code: ")
-        self.app.pages["Meet"] = MeetPage(self.app)
-        self.app.pages["Meet"].pack(fill=tk.BOTH, expand=True)
-        self.app.show_page("Meet")
+        while True:
+            meet_code = simpledialog.askstring("Meeting Code", "Enter the meeting code: ")
+            if meet_code is None:
+                return
+            if meet_code == "":
+                messagebox.showerror("Error", "You didn't enter a code")
+                continue
+            break
         
-        self.app.meeting = Meeting()
-        self.app.meeting.join_meet(meeting_code)
+        self.app.pages["Meet"] = MeetPage(self.app)
+        
+        self.app.meeting = Meeting(self.app.pages["Meet"])
+        self.app.meeting.join_meet(meet_code)
         
 class MeetPage(tk.Frame):
     def __init__(self, app:'App')-> None:
         super().__init__(master=app.main_frame)
         self.app = app
-        self.participants = [{"ip": get_ip_address(), "login": self.app.login.get()}]
+        self.ip = self.app.ip
+        self.participants = {self.ip:{"login": f"{self.app.login.get()}"}}
+        self.participants_frames = {}
+        self.participants_sockets = {}
         
         self.create_widgets()
         
     class ParticipantFrame(tk.Frame):
-        def __init__(self, master, participant:dict[str, str]):
+        def __init__(self, master, participant_ip, participant:dict[str, str]):
             super().__init__(master=master)
             self.configure(bg="#f0f0f0")
             
             self.login_label = tk.Label(self, text=participant["login"])
             self.login_label.pack(padx=3, pady=3)
             
-            self.ip_label = tk.Label(self, text=participant["ip"])
+            self.ip_label = tk.Label(self, text=participant_ip)
             self.ip_label.pack(padx=3, pady=3)
             
         
@@ -94,8 +102,9 @@ class MeetPage(tk.Frame):
         self.participants_label = tk.Label(self.participants_frame, text="Participants")
         self.participants_label.pack(pady=10)
         
-        self.participant_frame = self.ParticipantFrame(self.participants_frame, self.participants[0])
-        self.participant_frame.pack()
+        self.participants_frames[self.ip] = self.ParticipantFrame(self.participants_frame, self.ip, self.participants[self.ip])
+        self.participants_frames[self.ip].pack()
+        
         
     def resize_bg(self, event):
         canvas_width = event.width

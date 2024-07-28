@@ -17,7 +17,7 @@ RECV_ADDRESS = os.getenv("RECV_ADDRESS")
 RECV_PORT = int(os.getenv("RECV_PORT"))
 MAX_CHUNK_SIZE = int(os.getenv("MAX_CHUNK_SIZE"))
 ACCEPT_SIGNAL = os.getenv("ACCEPT_SIGNAL")
-REFUSE_SIGNAL=os.getenv("REFUSE_SIGNAL")
+REFUSE_SIGNAL = os.getenv("REFUSE_SIGNAL")
 MAX_SENDERS = int(os.getenv("MAX_SENDERS"))
 MAX_FILENAME_SIZE = int(os.getenv("MAX_FILENAME_SIZE"))
 
