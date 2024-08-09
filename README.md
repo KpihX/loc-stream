@@ -83,6 +83,7 @@ Les contributions au projet sont les bienvenues ! N'hésitez pas à proposer des
 ## Auteur ✍️
 
 - KpihX
+- shadow19walker
 
 ---
 
