@@ -1,28 +1,15 @@
 from tkinter import *
+
+import pygame
+from PIL import ImageTk
 from pygame import *
 
 from interface.Landing import *
+# from interface.Landing import App
 
 
 def printHello():
     print('hello world')
-
-
-def initialize_ui(app):
-    # Obtenez les dimensions de l'écran
-    screen_width = app.winfo_screenwidth()
-    screen_height = app.winfo_screenheight()
-
-    # Calculer 80% des dimensions de l'écran
-    default_width = int(0.8 * screen_width)
-    default_height = int(0.8 * screen_height)
-
-    # Calculer les coordonnées pour centrer la fenêtre
-    x_position = (screen_width - default_width) // 2
-    y_position = (screen_height - default_height) // 2
-
-    # Définir une dimension par défaut de 80% de l'écran et centrer la fenêtre
-    app.geometry(f"{default_width}x{default_height}+{x_position}+{y_position}")
 
 
 class MyApp(Tk):
@@ -56,7 +43,22 @@ class MyApp(Tk):
         # creation du footer
         self.footer = Frame(self, bg='green', height=50)
         self.footer.pack(side="bottom", fill="x")
-        initialize_ui(self)
+        self.initialize_ui()
+
+    def initialize_ui(self):
+        # Obtenez les dimensions de l'écran
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+        # Calculer 80% des dimensions de l'écran
+        default_width = int(0.8 * screen_width)
+        default_height = int(0.8 * screen_height)
+        # Calculer les coordonnées pour centrer la fenêtre
+        x_position = (screen_width - default_width) // 2
+        y_position = (screen_height - default_height) // 2
+        # Définir une dimension par défaut de 80% de l'écran et centrer la fenêtre
+        self.geometry(f"{default_width}x{default_height}+{x_position}+{y_position}")
+        # taille minimale
+        self.minsize(1200, 800)
 
 
 class Meet(MyApp):

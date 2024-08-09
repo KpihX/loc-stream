@@ -1,18 +1,17 @@
-from tkinter import Frame
+from tkinter import *
 
 from interface.PageTemplate import *
-from interface.PageTemplate import MyApp
+from PageTemplate import MyApp
 
 
-class Home(MyApp):
+class App(MyApp):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.HeaderManager()
+        self.Home()
 
-        self.BodyManager()
-
-    # gestion de l'entête du home
-    def HeaderManager(self):
+    # gestion de la page d'accueil
+    def Home(self):
+        # configuration de l'entête
         self.logo = Label(self.leftHeader, text='KAM_MEET', bg='green', pady=10, padx=5, font='Arial')
         self.logo.grid(row=0, column=0, sticky="w")
         self.logo10 = Label(self.centerHeader, text='KAM_MEET', bg='green', pady=10, padx=5, font='Arial')
@@ -25,8 +24,6 @@ class Home(MyApp):
         self.logo13.grid(row=0, column=3, sticky="")
         self.logo2 = Label(self.rightHeader, text='KAM_MEET', bg='green', pady=10, padx=5, font='Arial')
         self.logo2.grid(row=0, column=2, sticky="e")
-
-    def BodyManager(self):
         # subdivision du body
         self.body1 = Frame(self.body, background='white', height=120)
         self.body1.pack(side='top', fill=BOTH, expand=0)
@@ -34,7 +31,8 @@ class Home(MyApp):
         self.body2 = Frame(self.body, background='white')
         self.body2.pack(side='bottom', fill=BOTH, expand=1)
 
-        self.textTitle = Label(self.body1, text='welcome to KAM-MEET', font=('Arial', 40, 'bold italic'), bg='white', pady=150)
+        self.textTitle = Label(self.body1, text='welcome to KAM-MEET', font=('Arial', 40, 'bold italic'), bg='white',
+                               pady=150)
         self.textTitle.pack()
 
         # subdivision du body2
@@ -52,7 +50,8 @@ class Home(MyApp):
         self.rightBody2.grid(row=0, column=2, sticky="e")
 
         # contenu
-        self.startMeetButton = Button(self.centerBody2, text='lancer un meet', font=('Arial', 20, 'bold'), command=lambda: printHello(), pady=10, padx=10)
+        self.startMeetButton = Button(self.centerBody2, text='lancer un meet', font=('Arial', 20, 'bold'),
+                                      command=lambda: printHello(), pady=10, padx=10)
         self.startMeetButton.grid(column=0, row=0, padx=20)
 
         self.placeholder_text = 'Veuillez entrer le code du meet'
@@ -64,8 +63,23 @@ class Home(MyApp):
         self.joinMeetInput.bind("<FocusOut>", self.on_focus_out)
         self.joinMeetInput.bind("<KeyRelease>", self.check_entry_text)
 
-        self.joinMeetButton= Button(self.centerBody2, text='rejoindre un meet', font=('Arial', 20, 'bold'), state=DISABLED, command=lambda: printHello(), pady=10, padx=10)
+        self.joinMeetButton = Button(self.centerBody2, text='rejoindre un meet', font=('Arial', 20, 'bold'),
+                                     state=DISABLED, command=lambda: self.on_button_click(), pady=10, padx=10)
         self.joinMeetButton.grid(column=2, row=0, padx=5)
+
+        self.shareFile = Button(self.centerBody2, text='Share File', font=('Arial', 20, 'bold'),
+                                command=lambda: printHello(), pady=10, padx=10)
+        self.shareFile.grid(column=1, row=3, padx=20)
+
+    def meet(self):
+        self.HiddenFrameHead = self.header
+        self.HiddenFrameHead.pack(side=TOP, fill="both")
+        self.HiddenFrameBody = Frame(self.body)
+        self.HiddenFrameFooter = Frame(self.footer)
+        self.screenShare = Frame(self.body, bg='white')
+        self.participant = Frame(self.body, background='black', width=300)
+        self.participant.pack(side="right", fill="both")
+        self.screenShare.pack(side="left", fill="both", expand=True)
 
     def on_entry_click(self, event):
         """Fonction pour supprimer le placeholder lorsque l'utilisateur clique sur le champ de saisie."""
@@ -90,3 +104,8 @@ class Home(MyApp):
         entered_text = self.joinMeetInput.get()
         if entered_text != self.placeholder_text:
             print(f"Vous avez entré : {entered_text}")
+
+
+if __name__ == "__main__":
+    app = App()
+    app.mainloop()
